@@ -1,9 +1,16 @@
 import json
 import pandas as pd
+import numpy as np
 from pprint import pprint
+pd.set_option('display.max_columns', None)
+df = pd.read_csv('result_data.csv', delimiter=',', low_memory=False)
 
-
-with open ('result_data.json') as f:
-    json_reader = json.load(f)
-pprint(json)
+df_sort = df[['vacancy.source', 'vacancy.id', 'vacancy.region.name', 'vacancy.company.hr-agency', 'vacancy.company.name', 'vacancy.creation-date', 'vacancy.salary_min', 'vacancy.job-name', 'vacancy.employment', 'vacancy.schedule', 'vacancy.category.specialisation', 'vacancy.requirement.education', 'vacancy.requirement.experience', 'vacancy.currency', 'vacancy.salary_max']]
+vacancy_category = df[['vacancy.category.specialisation']]
+df_special = vacancy_category.value_counts()
+df_special.to_csv('Allvacancy_category.csv')
+# vac_cat_quantity = open('Allvacancy_category.csv', 'w')
+# vac_cat_quantity.write(df_special)
+# vac_cat_quantity.close()
+print(df_special)
 
