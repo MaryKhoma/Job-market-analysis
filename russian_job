@@ -3,14 +3,143 @@ import pandas as pd
 import numpy as np
 from pprint import pprint
 pd.set_option('display.max_columns', None)
-df = pd.read_csv('result_data.csv', delimiter=',', low_memory=False)
+# df = pd.read_csv('result_data.csv', delimiter=',', low_memory=False)
 
-df_sort = df[['vacancy.source', 'vacancy.id', 'vacancy.region.name', 'vacancy.company.hr-agency', 'vacancy.company.name', 'vacancy.creation-date', 'vacancy.salary_min', 'vacancy.job-name', 'vacancy.employment', 'vacancy.schedule', 'vacancy.category.specialisation', 'vacancy.requirement.education', 'vacancy.requirement.experience', 'vacancy.currency', 'vacancy.salary_max']]
-vacancy_category = df[['vacancy.category.specialisation']]
-df_special = vacancy_category.value_counts()
-df_special.to_csv('Allvacancy_category.csv')
+# df_sort = df[['vacancy.source', 'vacancy.id', 'vacancy.region.name', 'vacancy.company.hr-agency', 'vacancy.company.name', 'vacancy.creation-date', 'vacancy.salary_min', 'vacancy.job-name', 'vacancy.employment', 'vacancy.schedule', 'vacancy.category.specialisation', 'vacancy.requirement.education', 'vacancy.requirement.experience', 'vacancy.currency', 'vacancy.salary_max']]
+
+# df_special.to_csv('Allvacancy_category.csv') # сколько вакансий по рассматриваемым категориям
 # vac_cat_quantity = open('Allvacancy_category.csv', 'w')
 # vac_cat_quantity.write(df_special)
 # vac_cat_quantity.close()
-print(df_special)
 
+# regions = np.array(df_sort[['vacancy.region.name']].values).flatten()
+# uniq_regions = np.unique(regions)
+# # print(df_sort.head(3).to_string())
+# reg_dict = {}
+# for i in uniq_regions:
+#     # print(i)
+#     a = df_sort[df_sort['vacancy.region.name'] == i]
+#     # print(a[['vacancy.category.specialisation']].value_counts())
+#     # print("")
+#     # print("")
+#     # print("")
+#
+#     reg_dict[i] = a[['vacancy.category.specialisation']].value_counts()
+#
+# a = pd.DataFrame(reg_dict).T
+#
+# print(a.to_string())
+#
+# a.to_csv('Count_vac_by_regions.csv', encoding='utf-8-sig')# сколько вакансий по регионам
+
+# df_analys_2 = df[['vacancy.region.name', 'vacancy.company.name', 'vacancy.creation-date', 'vacancy.job-name', 'vacancy.category.specialisation']]
+# df_analys_2.to_csv('Vac_by_periods.csv', encoding='utf-8-sig')
+
+
+# Считаю количество вакансий по месяцам
+# a = df_analys_2.groupby('vacancy.category.specialisation')['vacancy.creation-date'].value_counts()
+# a.to_csv('Vac_by_data.csv', encoding='utf-8-sig')
+# print(a)
+
+# число вакансий разработчиков
+# developers = df[df['vacancy.job-name'].str.contains('разработчик')|(df['vacancy.job-name'].str.contains('developer'))]
+# developers.to_csv('All_developers.csv', encoding='utf-8-sig')
+# count_dev = developers.value_counts('vacancy.creation-date')
+# count_dev.to_csv('Count_developers.csv', encoding='utf-8-sig')
+# print(count_dev.to_string())
+
+# число вакансий журналистов, редакторов, корреспондентов
+# journalists = df[df['vacancy.job-name'].str.contains('журналист')|(df['vacancy.job-name'].str.contains('редактор'))|(df['vacancy.job-name'].str.contains('корреспондент'))]
+# journalists.to_csv('All_journalists.csv', encoding='utf-8-sig')
+# count_jour = journalists.value_counts('vacancy.creation-date')
+# count_jour.to_csv('Count_journalists.csv', encoding='utf-8-sig')
+# print(count_jour.to_string())
+
+# число вакансий военных
+# military = df[df['vacancy.job-name'].str.contains('военн')]
+# military.to_csv('All_military.csv', encoding='utf-8-sig')
+# count_mil = military.value_counts('vacancy.creation-date')
+# count_mil.to_csv('Count_military.csv', encoding='utf-8-sig')
+# print(count_mil.to_string())
+
+# число вакансий аналитиков
+# analyst = df[df['vacancy.job-name'].str.contains('аналитик')]
+# analyst.to_csv('All_analyst.csv', encoding='utf-8-sig')
+# count_analyst = analyst.value_counts('vacancy.creation-date')
+# count_analyst.to_csv('Count_analyst.csv', encoding='utf-8-sig')
+# print(analyst.to_string())
+
+# # Анализ файла hh_PUBLIC_SERVICE_month.csv
+df_hh = pd.read_csv(r'hh_PUBLIC_SERVICE_month.csv')
+# # allvac = len(df_hh)
+# vac = df_hh['name'].value_counts()
+# # vac.to_csv('hh_number_of_vac_PUBLIC_SERVICE.csv', encoding='utf-8-sig')
+#
+# city = df_hh['address.city'].value_counts()
+# # city.to_csv('hh_number_of_city_PUBLIC_SERVICE.csv', encoding='utf-8-sig')
+#
+# vac_by_city = df_hh.groupby('name')['address.city'].value_counts()
+# # vac_by_city.to_csv('hh_count_vac_by_city_PUBLIC_SERVICE.csv')
+#
+# company = df_hh['employer.name'].value_counts()
+# # company.to_csv('hh_company_PUBLIC_SERVICE.csv', encoding='utf-8-sig')
+#
+# salary = df_hh['salary.currency'].value_counts()
+# print(salary.to_string())
+
+# salary = df_hh.groupby('name')['salary.to'].median()
+# print(salary)
+# salary.to_csv('hh_salarymeanto_PUBLIC_SERVICE.csv', encoding='utf-8-sig')
+
+# time = df_hh['schedule.name'].value_counts()
+# time.to_csv('hh_time_sec_PUBLIC_SERVICE.csv', encoding='utf-8-sig')
+# print(time)
+
+# анализ военнослужащих
+# hh_military = df_hh[df_hh['name'].str.contains('Военнослужащий')|(df_hh['name'].str.contains('военнослужащий'))]
+#
+# citymil = hh_military['address.city'].value_counts()
+# edumil = hh_military[hh_military['snippet.requirement'].str.contains('Образование')|(hh_military['snippet.requirement'].str.contains('образование'))|(hh_military['snippet.requirement'].str.contains('образования'))]
+# count = edumil['snippet.requirement'].value_counts()
+# # count.to_csv('hh_military_requirementsPUBLIC_SERVICE.csv', encoding='utf-8-sig')
+#
+# salarymil = hh_military.groupby('address.city')['salary.from'].mode()
+# salarymil.to_csv('hh_citysalary_PUBLIC_SERVICE.csv', encoding='utf-8-sig')
+# print(salarymil)
+
+
+
+# Анализ файла hh_SECURITY_month.csv
+# df_security = pd.read_csv(r'hh_SECURITY_month.csv', sep=';')
+# vac_sec = df_security['name'].value_counts()
+# vac_sec.to_csv('hh_number_of_vac_SECURITY.csv', encoding='utf-8-sig')
+#
+# city_sec = df_security['address.city'].value_counts()
+# city_sec.to_csv('hh_number_of_city_SECURITY.csv', encoding='utf-8-sig')
+#
+# vac_by_city_sec = df_security.groupby('name')['address.city'].value_counts()
+# vac_by_city_sec.to_csv('hh_count_vac_by_city_SECURITY.csv')
+#
+# company_sec = df_security['employer.name'].value_counts()
+# company_sec.to_csv('hh_company_SECURITY.csv', encoding='utf-8-sig')
+#
+# salary_sec = df_security['salary.currency'].value_counts()
+# print(salary_sec.to_string())
+
+# salary_sec = df_security.groupby('name')['salary.to'].median()
+# print(salary_sec)
+# salary_sec.to_csv('hh_salarytomean_SECURITY.csv', encoding='utf-8-sig')
+
+# time_sec = df_security['schedule.name'].value_counts()
+# time_sec.to_csv('hh_time_sec_SECURITY.csv', encoding='utf-8-sig')
+# print(time_sec)
+
+
+#АНАЛИЗ ФАЙЛА "РАБОТА РОССИИ"
+df_rr = pd.read_csv(r'RR_4_specialisations_month.csv', sep=',', low_memory=False)
+rr_mil = df_rr[df_rr['vacancy.job-name'].str.contains('Военн')|(df_rr['vacancy.job-name'].str.contains('военн'))]
+rr_mil_who = rr_mil['vacancy.company.name'].value_counts()
+# rr_mil_who.to_csv('rr_mil_company_4spec.csv', encoding='utf-8-sig')
+
+rr_mil_salary = rr_mil['vacancy.salary_max'].median()
+print(rr_mil_salary)
